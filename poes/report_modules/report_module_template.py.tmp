@@ -1,0 +1,36 @@
+# Template class for a reporting module - to be used as a reference 
+# for developing reporting modules.  This template will function as
+# a module, but with no output.
+#
+# outDir is the absolute path to the folder where output will
+# be written.  Every output file name will begin with outPrefix.
+#
+# configInfo is a dictionary of the following strings which should
+# be written to the report module's output:
+# POES_VER - POES version number
+# POES_REF - APA-style reference for POES
+# WL_INFO - Description of wordlist from wordlist file
+# WL_REF - APA-style reference for the wordlist used for scoring
+# SUBJFILELOC - location of input subject data file that was scored
+# NSUBJ - number of subjects in the input data
+# MAXNITEMS - maximum number of items over all subjects
+# MAXNSUBP - maximum number of subparts over all items and subjects
+#
+
+from poes_heirarchy import *
+
+def report(batch, wordlist, outDir, outPrefix, configInfo):
+    subjects = batch.getSubScorables()
+    for subjID in subjects:
+    items = subjects[subjID].getSubScorables()
+    for itemID in items.keys():
+        subparts = items[itemID].getSubScorables()
+        for subpID in subparts.keys():
+        subpScores = subparts[subpID].getScoreTable()
+        # TO DO: create some output using subpScores and subpID 
+        itemScores = items[itemID].getScoreTable()
+        # TO DO: create some output using itemScores and itemID
+    subjScores = subjects[subjID].getScoreTable()
+    # TO DO: create some output using subjScores and subjID
+    batchScores = batch.getScoreTable()
+    # TO DO: create some output using batchScores

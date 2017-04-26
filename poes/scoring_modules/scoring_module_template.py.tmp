@@ -1,0 +1,42 @@
+# Template file for a scoring module - to be used as a reference 
+# for developing scoring modules.  This template will function as
+# a module, filling in every score as -1.0.
+#
+# You can assume that updateKeyCounts has already been called for each
+# member of subScorable and that the result (if any) can be found
+# with the getKeyCounts method of the corresponding subScorable
+
+#import os
+#os.chdir("..")
+from poes_heirarchy import *
+from poes_wordlist import Wordlist
+
+modname = "SCORING MODULE TEMPLATE (NOT A REAL SCORING METHOD)"
+
+# For most scoring methods, score(batch, wlistTab) should iterate over
+# the scorables in batch.  wlistTab is a dictionary of wordlist keys
+# (as tuples) indexing their values.  For each scorable, a typical
+# scoring method uses the key counts and wordlist values to compute 
+# scores.  After computing a score for each scorable, the scoring
+# method can assign that score using updateScoreTable(modname, s) 
+# (where s is the computed score).
+def score(batch, wlist):
+    for subj in batch.getSubScorables().values():
+        for item in subj.getSubScorables().values():
+        for subp in item.getSubScorables().values():
+            keyct = subp.getKeyCounts()
+        # compute subpScore using keyct and wlist
+            subpScore = -1.0
+        subp.appendScoreTable(modname, subpScore)
+        keyct = item.getKeyCounts()
+        # compute itemScore using keyct, wlist, and possibly subpart scores
+        itemScore = -1.0
+        item.appendScoreTable(modname, itemScore)
+        keyct = subj.getKeyCounts()
+    # compute subjScore using keyct, wlist, and possibly subpart or item scores
+    subjScore = -1.0
+    subj.appendScoreTable(modname, subjScore)
+    keyct = batch.getKeyCounts()
+    # compute batchScore using keyct, wlist, and possibly subpart, item, or subject scores
+    batchScore = -1.0
+    batch.appendScoreTable(modname, batchScore)
